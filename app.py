@@ -20,50 +20,49 @@ class BaseModel(peewee.Model):
         database = DATABASE_CONNECTION
 
 class Contact(BaseModel):
-    id = peewee.IntegerField(primary_key=True)
-    name = peewee.CharField(max_length=80)
-    email = peewee.CharField(max_length=120)
-    phone_number = peewee.CharField(max_length=16)
+    contact_id = peewee.IntegerField(primary_key=True)
+    contact_nom = peewee.CharField(max_length=120)
+    contact_prenom = peewee.CharField(max_length=120)
+    contact_adresse_rue = peewee.CharField(max_length=254)
+    contact_adresse_cp = peewee.CharField(max_length=10)
+    contact_adresse_ville = peewee.CharField(max_length=120)
+    contact_numero_prive = peewee.CharField(max_length=13)
+    contact_numero_bureau = peewee.CharField(max_length=13)
+    contact_courriel = peewee.CharField(max_length=254)
+    contact_note = peewee.TextField()
 
     def __unicode__(self):
-        return self.name
+        return "%s %s" % (self.contact_prenom, self.contact_nom)
 
-class Company(BaseModel):
-    id = peewee.IntegerField(primary_key=True)
-    name = peewee.CharField(max_length=200)
-    description = peewee.TextField(null=False)
-    address_street = peewee.CharField(max_length=300)
-    address_city = peewee.CharField(max_length=300)
-    address_zipcode = peewee.CharField(max_length=10)
-
-    contact = peewee.ForeignKeyField(Contact) # Contact in this company
+class Entreprise(BaseModel):
+    entreprise_id = peewee.IntegerField(primary_key=True)
+    entreprise_libelle = peewee.CharField(max_length=200)
+    entreprise_rue = peewee.CharField(max_length=254)
+    entreprise_cp = peewee.CharField(max_length=10)
+    entreprise_ville = peewee.CharField(max_length=120)
+    entreprise_telephone = peewee.CharField(max_length=13)
+    entreprise_fax = peewee.CharField(max_length=13)
+    entreprise_courriel = peewee.CharField(max_length=254)
+    entreprise_site_web = peewee.CharField(max_length=500)
+    entreprise_note = peewee.TextField()
 
     def __unicode__(self):
-        return self.name
+        return self.entreprise_libelle
 
 class ContactAdmin(ModelView):
-    column_exclude_list = ['id']
+    column_exclude_list = ['contact_id']
 
-class CompanyAdmin(ModelView):
+class EntrepriseAdmin(ModelView):
     # Visible columns in the list view
-    column_exclude_list = ['id']
+    column_exclude_list = ['entreprise_id']
 
-    # List of columns that can be sorted. For 'contact' column, use its email
-    column_sortable_list = ('name', ('contact', Contact.email), 'address_city')
-
-    # Full text search
-    column_searchable_list = ('name', Contact.name)
+    # List of columns that can be sorted.
+    column_sortable_list = ('entreprise_ville', 'entreprise_libelle')
 
     # Column filters
-    column_filters = ('name',
-                      'address_city',
-                      Contact.name)
-
-    form_ajax_refs = {
-        'contact': {
-            'fields': (Contact.name, 'email')
-        }
-    }
+    column_filters = ('entreprise_ville',
+                      'entreprise_cp',
+                      'entreprise_libelle')
 
 @app.route('/')
 def index():
@@ -77,11 +76,11 @@ if __name__ == '__main__':
     admin = admin.Admin(app, name='Data Management', url='/manage')
 
     admin.add_view(ContactAdmin(Contact))
-    admin.add_view(CompanyAdmin(Company))
+    admin.add_view(EntrepriseAdmin(Entreprise))
 
     try:
         Contact.create_table()
-        Company.create_table()
+        Entreprise.create_table()
     except:
         pass
 
