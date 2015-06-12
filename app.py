@@ -111,7 +111,8 @@ class EntrepriseAdmin(ModelView):
 
 @app.route('/')
 def index():
-    return '<a href="/manage/">Manage data</a>'
+    query = Entreprise.select().limit(5)
+    return render_template('dashboard.html', entreprises=query)
 
 if __name__ == '__main__':
     import logging
