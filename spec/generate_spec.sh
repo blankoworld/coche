@@ -10,6 +10,6 @@ do
   name=`basename $file $import_ext`
   output="${name}${export_ext}"
   cat $header > $output
-  python -m markdown $file >> $output
+  python3 -m markdown $file >> $output
   cat $footer >> $output
 done

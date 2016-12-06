@@ -10,12 +10,14 @@ Savoir quelle entreprise a été contactée, de quelle manière, à quelle date,
 
 Ce programme dépend de :
 
-  * python
-  * virtualenv
+  * python3
+  * python3-markdown
+  * python3-pip
+  * python3-virtualenv
 
 Sur une distribution basée sur Debian, tapez la commande suivante : 
 
-    sudo apt-get install -y python python-virtualenv
+    sudo apt-get install -y python3 python3-virtualenv python3-pip
 
 Cela installe l'ensemble des dépendances.
 
