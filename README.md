@@ -8,35 +8,29 @@ Savoir quelle entreprise a été contactée, de quelle manière, à quelle date,
 
 # Dépendances
 
-Ce programme dépend de :
-
-  * python3
-  * python3-markdown
-  * python3-pip
-  * python3-virtualenv
-
-Sur une distribution basée sur Debian, tapez la commande suivante : 
-
-    sudo apt-get install -y python3 python3-virtualenv python3-pip
-
-Cela installe l'ensemble des dépendances.
+* docker
+* docker-compose
+* php 7.4|8.0 avec les extensions suivantes :
+  * pdo\_mysql
+  * mysqli
 
 # Dépendances applicatives
 
-Lancer : 
+```bash
+cd www
+composer install
+```
 
-    ./dependancies.sh
+# Installation
 
-Patienter.
-
-Vous êtes désormais dans un environnement virtuel avec les dépendances de l'application installées localement.
-
-Pour quitter l'environnement virtuel, tapez simplement : ```deactivate```.
+`docker-compose up -d`
 
 # Utilisation
 
-Lancer : 
+```bash
+cd www
+php artisan serve
+```
 
-    python app.py
+Aller sur http://localhost:8000/
 
-Ouvrir un navigateur Web sur la [page d'accueil de Coche](http://localhost:5000/)
