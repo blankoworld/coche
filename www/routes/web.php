@@ -20,4 +20,9 @@ Route::get('/', function () {
     return view('welcome', [
         'companies' => $companies,
     ]);
+})->name('home');
+
+Route::fallback(function () {
+    // Affichage par défaut pour toute route non desservie
+    return view('default');
 });
